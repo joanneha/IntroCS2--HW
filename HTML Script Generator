@@ -1,0 +1,93 @@
+# HTML Generating Script by Joanne Ha, period 8
+# Make sure to read the user guidelines below BEFORE using the script.
+
+'''
+USER GUIDELINES:
+    0. Hi user. -- JH
+    1. Copy everything from the dotted line below (except my comments).
+    Do not forget the shbang.
+    2. Most of the functions you need is built-in my script. This includes
+    <div>; <span>; <a>; <img>. If your tag is not built-in, see #3.
+        2a. For this, use the replacer(s,q,r) function to replace "code" or 
+        "text" (or "alt" or "src").
+        2b. For example:
+            replacer(div, "code", "font = 12")
+        will put "font = 12" in my div tag. The outcome looks like thus:
+            <div style="font = 12"> text
+            </div> 
+    3. When using tags not already setup, use tagger(x,y).
+        - The parameter x is your tag
+        - The parameter y is either the number 0 or the number 1.
+        - If y is 1, that means the tag is OPENING. 
+        - If y is 0, that means the tag is CLOSING.
+     4. LOOK AT the sample function!
+
+'''
+
+# --------------------------------------------------------------------------
+
+#!/usr/bin/python
+print "Content-Type: text/html\n"
+print ""
+
+# Header containing basic needs
+header = """
+<!DOCTYPE html>
+<html>
+<head>
+<title> Insert Title </title>
+</head>
+<!-- First Last -->
+<!-- IntroCS2 pd. x -->
+<!-- HW#y: Title -->
+<!-- 2015-month-day -->
+"""
+# Tagger
+def tagger(x,y):
+    if y: 
+        return "<" + x + ">"
+    else:
+        return "</" + x + ">"  
+# REPLACER: s = the string (div, span, etc.); 
+def replacer(s,q,r):
+    if s.find(q) != -1:
+        posn = s.find(q)
+        s = s[:posn] + r + s[posn + len(q):]
+    return s
+
+# Special Features!
+
+# <div> tag
+div = """
+<div style = "code"> text
+</div>
+"""
+
+# <span> tag 
+span = """
+<span-style = "code"> text
+</span>
+"""
+
+# <img> tag
+img = """
+<img src = "src"; alt = "alt">
+"""
+
+# hyperlink (<a>) tag
+a = """
+<a href="code">
+text
+</a>
+"""
+
+# Sample Function 
+def sample_fxn():
+    code = "" # KEEP THIS
+    code += (header + replacer(div, "code", "font = 12"))
+    code += replacer(a, "code", "lisa.stuy.edu/~joanne.ha")
+    code += replacer(a, "text", "click on this link!!")
+    code += "</html>"
+    return code
+
+print sample_fxn()
