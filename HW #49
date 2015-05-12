@@ -1,0 +1,54 @@
+# Team The Music of the Night -- Clio Chen, Joanne Ha
+# IntroCS2 pd.08
+# HW #49: CSV -> HTML
+# 2015-05-11
+
+# Write a Python script (genTable.py) that will read a CSV file (testdata.csv)
+# in the same directory and use its contents to generate an HTML file(table.html).
+# When rendered in a browser, this HMTL file will yield a table containing the
+# data in the CSV file.
+
+# File I: Reading the incoming testdata.csv file
+instream = open('testdata.csv', 'r')
+a = instream.readlines()
+print a # testing to see that the CSV file is in the correct place
+
+# File O: Writing and outputting a HTML file 
+# Basic header of any table-generating HTML file
+
+header = """
+<!DOCTYPE html>
+<html>
+<p> Table of testdata.csv </p>
+<table style="width:75%"; border = "3px dashed black">
+<BR>
+"""
+shbang = """
+#!/usr/bin/python
+print "Content-Type: text/html\n"
+print ""
+"""
+def HTMLify(L):
+    filler = ""
+    filler += header # Right now, filler contains the header of any table-generating HTML script
+    newinfo = ""
+    for i in L:
+        td = (i[:-1]).split(",")
+        linebreak = i[-1]
+        newinfo += "<tr>"
+        for j in td:
+            newinfo += "<td>" + j + "</td>" 
+        newinfo += linebreak
+        filler += newinfo
+    return filler
+
+# Diagnostics
+print "---TESTING HTMLify---"
+print HTMLify(['Maasym,999,a\n', 'Mahasim,1000,b\n', 'Maia,1001,c\n', 'Marfark,1002,d\n'])
+
+# yay it works! 
+
+# Now to put it all together
+outstream = open('table.html', 'w')
+outstream.write((shbang + HTMLify(instream)))
+outstream.close()
